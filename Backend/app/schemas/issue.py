@@ -45,3 +45,13 @@ class IssueWithExplanation(IssueResponse):
     """Issue with AI-generated explanation."""
     explanation: Optional[ExplanationResponse] = None
     related_commits: List[str] = []
+
+
+class ExplainRequest(BaseModel):
+    """Request schema for AI explanation."""
+    commit_message: str
+
+
+class ExplainResponseSimple(BaseModel):
+    """Response schema for AI explanation."""
+    explanation: str

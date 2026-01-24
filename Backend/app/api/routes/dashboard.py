@@ -1,8 +1,18 @@
 from fastapi import APIRouter
 
-from app.schemas.dashboard import DashboardStats, RecentActivity
+from app.schemas.dashboard import DashboardStats, DashboardSummary, RecentActivity
 
 router = APIRouter()
+
+
+@router.get("/summary", response_model=DashboardSummary)
+async def get_dashboard_summary():
+    """Get dashboard summary with bug statistics."""
+    return {
+        "bugs_fixed": 128,
+        "open_bugs": 42,
+        "regressions": 3,
+    }
 
 
 @router.get("/stats", response_model=DashboardStats)

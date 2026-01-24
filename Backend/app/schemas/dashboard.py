@@ -3,6 +3,13 @@ from datetime import datetime
 from pydantic import BaseModel
 
 
+class DashboardSummary(BaseModel):
+    """Dashboard summary schema."""
+    bugs_fixed: int
+    open_bugs: int
+    regressions: int
+
+
 class DashboardStats(BaseModel):
     """Dashboard statistics schema."""
     total_issues: int = 0

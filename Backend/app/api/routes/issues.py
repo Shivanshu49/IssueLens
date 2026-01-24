@@ -1,7 +1,7 @@
 from typing import List, Optional
 from fastapi import APIRouter, Query
 
-from app.schemas.issue import IssueResponse, IssueWithExplanation
+from app.schemas.issue import IssueResponse, IssueWithExplanation, ExplainRequest, ExplainResponseSimple
 
 router = APIRouter()
 
@@ -45,3 +45,11 @@ async def generate_explanation(issue_id: str):
     # TODO: Fetch issue and related diffs
     # TODO: Send to AI service for explanation
     return {"status": "processing", "issue_id": issue_id}
+
+
+@router.post("/explain", response_model=ExplainResponseSimple)
+async def explain_commit(request: ExplainRequest):
+    """Generate AI explanation for a commit message."""
+    return {
+        "explanation": "This change fixes a memory leak caused by improper cleanup."
+    }
