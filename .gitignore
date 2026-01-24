@@ -1,18 +1,31 @@
 # Dependencies
-Frontend/node_modules
-Backend/venv
+node_modules/
+Frontend/node_modules/
+Backend/venv/
 venv/
-__pycache__/
-*.pyc
+.venv/
 
-# Environment files
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+
+# Environment files - NEVER COMMIT
 .env
 .env.local
 .env.*.local
+.env.production
+.env.development
 
 # IDE
 .vscode/
 .idea/
+*.swp
+*.swo
 
 # OS
 .DS_Store
@@ -21,12 +34,23 @@ Thumbs.db
 # Database
 *.db
 *.sqlite
+*.sqlite3
 
 # Logs
 *.log
 npm-debug.log*
+pip-log.txt
 
 # Build
 dist/
 build/
 *.egg-info/
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Misc
+*.bak
+*.tmp

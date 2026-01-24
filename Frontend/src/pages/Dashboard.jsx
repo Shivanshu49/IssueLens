@@ -1,8 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import StatCard from "../components/StatCard";
 import FeatureCard from "../components/FeatureCard";
 
+// API base URL - configurable via environment variable
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api/v1";
+
 export default function Dashboard() {
+  const [activities, setActivities] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch activity feed
+  useEffect(() => {
+    const fetchActivity = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch(`${API_BASE}/activity`);
+        if (!res.ok) throw new Error("Failed to fetch activity");
+        const data = await res.json();
+        setActivities(data.slice(0, 5)); // Last 5 events
+        setError(null);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchActivity();
+    // Refresh every 30 seconds
+    const interval = setInterval(fetchActivity, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
   // demo data -- replace with API calls later
   const stats = [
     { label: "Bugs fixed (30d)", value: "128", delta: "+12%" },
@@ -10,20 +40,26 @@ export default function Dashboard() {
     { label: "Potential regressions", value: "3", delta: "+1" },
   ];
 
-  const recent = [
-    {
-      id: 1,
-      title: "Fix state leak in Navbar",
-      status: "fixed",
-      summary: "Removed stale state causing re-renders.",
-    },
-    {
-      id: 2,
-      title: "Auth token expiration bug",
-      status: "open",
-      summary: "Tokens not refreshed on expiry.",
-    },
-  ];
+  const getStatusBadge = (status) => {
+    const styles = {
+      fixed: "bg-green-100 text-green-800",
+      completed: "bg-green-100 text-green-800",
+      open: "bg-yellow-100 text-yellow-800",
+      pending: "bg-blue-100 text-blue-800",
+      error: "bg-red-100 text-red-800",
+    };
+    return styles[status] || "bg-gray-100 text-gray-800";
+  };
+
+  const getTypeIcon = (type) => {
+    const icons = {
+      push: "🔄",
+      issue: "🐛",
+      pull_request: "📥",
+      commit: "📝",
+    };
+    return icons[type] || "📌";
+  };
 
   return (
     <div className="min-h-screen">
@@ -47,36 +83,57 @@ export default function Dashboard() {
         <div className="mt-8 grid md:grid-cols-3 gap-6">
           <div className="md:col-span-2 bg-[#f7fbff] border border-gray-200 rounded-lg p-6">
             <h3 className="text-lg font-semibold text-[#0d3141]">
-              Recent activity
+              Live Activity Feed
             </h3>
-            <ul className="mt-4 space-y-4">
-              {recent.map((r) => (
-                <li
-                  key={r.id}
-                  className="p-4 border border-gray-100 rounded-md"
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <h4 className="text-sm font-semibold text-[#0d3141]">
-                        {r.title}
-                      </h4>
-                      <p className="mt-1 text-sm text-gray-600">{r.summary}</p>
-                    </div>
-                    <div>
+            
+            {loading && (
+              <div className="mt-4 flex items-center justify-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0d3141]"></div>
+                <span className="ml-3 text-gray-600">Loading activity...</span>
+              </div>
+            )}
+
+            {error && (
+              <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-md">
+                <p className="text-sm text-red-600">Error: {error}</p>
+              </div>
+            )}
+
+            {!loading && !error && activities.length === 0 && (
+              <div className="mt-4 p-8 text-center">
+                <p className="text-gray-500">No recent activity</p>
+              </div>
+            )}
+
+            {!loading && !error && activities.length > 0 && (
+              <ul className="mt-4 space-y-4">
+                {activities.map((activity, idx) => (
+                  <li
+                    key={idx}
+                    className="p-4 border border-gray-100 rounded-md bg-white hover:shadow-sm transition-shadow"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex items-start gap-3">
+                        <span className="text-xl">{getTypeIcon(activity.type)}</span>
+                        <div>
+                          <h4 className="text-sm font-semibold text-[#0d3141]">
+                            {activity.message}
+                          </h4>
+                          <p className="mt-1 text-xs text-gray-500">
+                            {activity.repo} • {activity.type}
+                          </p>
+                        </div>
+                      </div>
                       <span
-                        className={`px-3 py-1 rounded-full text-xs font-medium ${
-                          r.status === "fixed"
-                            ? "bg-green-100 text-green-800"
-                            : "bg-yellow-100 text-yellow-800"
-                        }`}
+                        className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusBadge(activity.status)}`}
                       >
-                        {r.status}
+                        {activity.status}
                       </span>
                     </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           <div className="bg-[#f7fbff] border border-gray-200 rounded-lg p-6">
