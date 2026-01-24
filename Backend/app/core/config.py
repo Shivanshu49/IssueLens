@@ -1,5 +1,6 @@
 from typing import List
 from pydantic_settings import BaseSettings
+from pydantic import Field
 
 
 class Settings(BaseSettings):
@@ -7,28 +8,35 @@ class Settings(BaseSettings):
     
     PROJECT_NAME: str = "IssueLens"
     API_V1_STR: str = "/api/v1"
+    DEBUG: bool = False
+    
+    # Security
+    SECRET_KEY: str = Field(default="change-me-in-production")
     
     # CORS
     ALLOWED_ORIGINS: List[str] = ["http://localhost:3000", "http://localhost:5173"]
     
-    # GitHub
-    GITHUB_TOKEN: str = ""
-    GITHUB_WEBHOOK_SECRET: str = ""
+    # GitHub - Required for production
+    GITHUB_TOKEN: str = Field(default="")
+    GITHUB_WEBHOOK_SECRET: str = Field(default="")
     
-    # AI Service
-    OPENAI_API_KEY: str = ""
+    # AI Service - Required for production
+    OPENAI_API_KEY: str = Field(default="")
     AI_MODEL: str = "gpt-4"
     
-    # Database (optional for later)
+    # Database
     DATABASE_URL: str = "sqlite:///./issuelens.db"
     
     # Pathway
     PATHWAY_HOST: str = "localhost"
     PATHWAY_PORT: int = 8080
     
-    class Config:
-        env_file = ".env"
-        case_sensitive = True
+    model_config = {
+        "env_file": ".env",
+        "env_file_encoding": "utf-8",
+        "case_sensitive": True,
+        "extra": "ignore",
+    }
 
 
 settings = Settings()
