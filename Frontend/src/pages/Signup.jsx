@@ -31,9 +31,9 @@ export default function Signup() {
 
     return (
         <div className="flex items-center justify-center min-h-[80vh]">
-            <div className="w-full max-w-md p-8 bg-white border border-gray-100 rounded-lg shadow-sm">
-                <h2 className="text-2xl font-bold text-center text-[#0d3141]">Create Account</h2>
-                <p className="mt-2 text-center text-gray-600">Join IssueLens to track your repos</p>
+            <div className="w-full max-w-md p-8 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-lg shadow-sm">
+                <h2 className="text-2xl font-bold text-center text-[#0d3141] dark:text-white">Create Account</h2>
+                <p className="mt-2 text-center text-gray-600 dark:text-gray-300">Join IssueLens to track your repos</p>
 
                 {serverError && (
                     <div className="mt-4 p-3 text-sm text-red-700 bg-red-50 rounded-md">
@@ -43,21 +43,21 @@ export default function Signup() {
 
                 <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Email</label>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
                         <input
                             type="email"
                             {...register("email", { required: "Email is required" })}
-                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#0d3141] focus:border-[#0d3141]"
+                            className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-[#0d3141] focus:border-[#0d3141]"
                         />
                         {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email.message}</p>}
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Password</label>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
                         <input
                             type="password"
                             {...register("password", { required: "Password is required", minLength: { value: 6, message: "Min 6 chars" } })}
-                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#0d3141] focus:border-[#0d3141]"
+                            className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-[#0d3141] focus:border-[#0d3141]"
                         />
                         {errors.password && <p className="mt-1 text-xs text-red-600">{errors.password.message}</p>}
                     </div>
@@ -71,9 +71,9 @@ export default function Signup() {
                     </button>
                 </form>
 
-                <p className="mt-4 text-center text-sm text-gray-600">
+                <p className="mt-4 text-center text-sm text-gray-600 dark:text-gray-400">
                     Already have an account?{" "}
-                    <Link to="/login" className="font-medium text-[#0d3141] hover:underline">
+                    <Link to="/login" className="font-medium text-[#0d3141] dark:text-[#5ba3c0] hover:underline">
                         Log in
                     </Link>
                 </p>

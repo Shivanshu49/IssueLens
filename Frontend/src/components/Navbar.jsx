@@ -17,10 +17,7 @@ function Navbar() {
         <div className="h-20 flex items-center justify-between">
           {/* Brand */}
           <Link to="/" className="flex items-center">
-            <span className="text-2xl font-extrabold leading-none">Issue</span>
-            <span className="text-2xl font-extrabold text-[#d5002c] leading-none">
-              Lens
-            </span>
+            <span className="text-2xl font-extrabold leading-none">Issue</span><span className="text-2xl font-extrabold text-[#d5002c] leading-none">Lens</span>
           </Link>
 
           {/* Desktop nav */}

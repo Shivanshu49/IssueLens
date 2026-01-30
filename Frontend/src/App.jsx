@@ -14,7 +14,7 @@ import PrivateRoute from "./components/PrivateRoute";
 
 export default function App() {
   return (
-    <div className="flex flex-col min-h-screen bg-[#f7fbff] text-[#0d3141]">
+    <div className="flex flex-col min-h-screen bg-[#f7fbff] dark:bg-gray-900 text-[#0d3141] dark:text-gray-100 transition-colors duration-200">
       <Navbar />
       <main className="flex-grow">
         <Routes>
