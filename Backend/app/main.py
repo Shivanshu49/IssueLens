@@ -31,8 +31,12 @@ app.include_router(api_router, prefix=settings.API_V1_STR)
 @app.on_event("startup")
 async def startup_event():
     """Initialize services on startup."""
+    # Initialize Database Tables
+    from app.db.base import Base, engine
+    Base.metadata.create_all(bind=engine)
+    
     # TODO: Initialize Pathway pipeline
-    # TODO: Setup database connections
+    # pathway_service.initialize_pipeline()
     pass
 
 

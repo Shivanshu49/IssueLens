@@ -3,6 +3,9 @@ from pydantic_settings import BaseSettings
 from pydantic import Field, field_validator
 
 
+from dotenv import load_dotenv
+load_dotenv()
+
 class Settings(BaseSettings):
     """Application settings loaded from environment variables."""
     
@@ -12,6 +15,8 @@ class Settings(BaseSettings):
     
     # Security
     SECRET_KEY: str = Field(default="change-me-in-production")
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 8 # 8 days
+
     
     # CORS
     ALLOWED_ORIGINS: List[str] = ["http://localhost:3000", "http://localhost:5173"]
@@ -39,7 +44,7 @@ class Settings(BaseSettings):
     PATHWAY_PORT: int = 8080
     
     model_config = {
-        "env_file": ".env",
+        # "env_file": ".env", # Disabled due to pydantic-settings issue
         "env_file_encoding": "utf-8",
         "case_sensitive": True,
         "extra": "ignore",

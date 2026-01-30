@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
+import { useAuth } from "../context/AuthContext";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
+  const { isAuthenticated, logout } = useAuth();
 
   const navClass = ({ isActive }) =>
     `hover:text-white transition ${isActive ? "text-white" : "text-gray-200"}`;
@@ -46,12 +50,41 @@ function Navbar() {
 
           {/* CTA + Mobile button */}
           <div className="flex items-center gap-4">
-            <Link
-              to="/auth"
-              className="hidden sm:inline-block px-4 py-2 rounded-md bg-[#d5002c] text-[#f7fbff] text-sm font-semibold hover:bg-[#b30023] transition"
+            {/* Theme Toggle */}
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-full hover:bg-white/10 transition"
+              aria-label="Toggle theme"
             >
-              Signup / Login
-            </Link>
+              {theme === "dark" ? "☀️" : "🌙"}
+            </button>
+
+            {isAuthenticated ? (
+              <button
+                onClick={() => {
+                  logout();
+                  setOpen(false);
+                }}
+                className="hidden sm:inline-block px-4 py-2 rounded-md bg-gray-200 text-gray-800 text-sm font-semibold hover:bg-gray-300 transition"
+              >
+                Logout
+              </button>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="hidden sm:inline-block px-4 py-2 text-sm font-semibold text-gray-200 hover:text-white transition"
+                >
+                  Log in
+                </Link>
+                <Link
+                  to="/signup"
+                  className="hidden sm:inline-block px-4 py-2 rounded-md bg-[#d5002c] text-[#f7fbff] text-sm font-semibold hover:bg-[#b30023] transition"
+                >
+                  Sign up
+                </Link>
+              </>
+            )}
 
             {/* Mobile menu button */}
             <button
@@ -88,9 +121,8 @@ function Navbar() {
 
       {/* Mobile menu */}
       <div
-        className={`md:hidden bg-[#0d3141] border-t border-gray-700 transition-max-height duration-300 overflow-hidden ${
-          open ? "max-h-65" : "max-h-0"
-        }`}
+        className={`md:hidden bg-[#0d3141] border-t border-gray-700 transition-max-height duration-300 overflow-hidden ${open ? "max-h-65" : "max-h-0"
+          }`}
       >
         <div className="px-6 mb-6 pb-6 flex flex-col gap-3 text-gray-200">
           <NavLink
@@ -131,13 +163,34 @@ function Navbar() {
             GitHub
           </a>
 
-          <Link
-            to="/auth"
-            onClick={() => setOpen(false)}
-            className="mt-2 inline-block px-4 py-2 rounded-md bg-[#d5002c] text-[#f7fbff] text-sm font-semibold hover:bg-[#b30023] transition w-max"
-          >
-            Signup / Login
-          </Link>
+          {isAuthenticated ? (
+            <button
+              onClick={() => {
+                logout();
+                setOpen(false);
+              }}
+              className="mt-2 text-left block py-2 hover:text-white w-full"
+            >
+              Logout
+            </button>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                onClick={() => setOpen(false)}
+                className="mt-2 text-left block py-2 hover:text-white"
+              >
+                Log in
+              </Link>
+              <Link
+                to="/signup"
+                onClick={() => setOpen(false)}
+                className="mt-2 inline-block px-4 py-2 rounded-md bg-[#d5002c] text-[#f7fbff] text-sm font-semibold hover:bg-[#b30023] transition w-max"
+              >
+                Sign up
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>

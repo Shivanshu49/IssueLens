@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useAuth } from "../context/AuthContext";
 import StatCard from "../components/StatCard";
 import FeatureCard from "../components/FeatureCard";
 
@@ -10,17 +12,23 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const { token, logout } = useAuth();
+
   // Fetch activity feed
   useEffect(() => {
     const fetchActivity = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${API_BASE}/activity`);
-        if (!res.ok) throw new Error("Failed to fetch activity");
-        const data = await res.json();
-        setActivities(data.slice(0, 5)); // Last 5 events
+        const res = await axios.get(`${API_BASE}/dashboard/activity`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setActivities(res.data.events.slice(0, 5)); // Last 5 events
         setError(null);
       } catch (err) {
+        console.error("Dashboard fetch error:", err);
+        if (err.response && (err.response.status === 401 || err.response.status === 403)) {
+          logout(); // Auto logout on invalid token
+        }
         setError(err.message);
       } finally {
         setLoading(false);
@@ -85,7 +93,7 @@ export default function Dashboard() {
             <h3 className="text-lg font-semibold text-[#0d3141]">
               Live Activity Feed
             </h3>
-            
+
             {loading && (
               <div className="mt-4 flex items-center justify-center py-8">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0d3141]"></div>

@@ -113,6 +113,16 @@ docker run -p 8000:8000 --env-file .env issuelens-backend
 - AI explanations are generated asynchronously
 - Database integration is optional (SQLAlchemy ready)
 
+### Running Pathway Pipeline
+To start the real-time data processing pipeline (Linux/macOS only):
+
+```bash
+# Pathway is not supported on Windows
+# Install on Linux/Mac:
+# pip install pathway
+# python pathway/pipeline.py
+```
+
 ## License
 
 MIT
