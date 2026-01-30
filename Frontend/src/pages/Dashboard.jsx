@@ -4,7 +4,6 @@ import { useAuth } from "../context/AuthContext";
 import StatCard from "../components/StatCard";
 import FeatureCard from "../components/FeatureCard";
 
-// API base URL - configurable via environment variable
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api/v1";
 
 export default function Dashboard() {
@@ -14,7 +13,6 @@ export default function Dashboard() {
 
   const { token, logout } = useAuth();
 
-  // Fetch activity feed
   useEffect(() => {
     const fetchActivity = async () => {
       try {
@@ -22,12 +20,12 @@ export default function Dashboard() {
         const res = await axios.get(`${API_BASE}/dashboard/activity`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setActivities(res.data.events.slice(0, 5)); // Last 5 events
+        setActivities(res.data.events.slice(0, 5));
         setError(null);
       } catch (err) {
         console.error("Dashboard fetch error:", err);
         if (err.response && (err.response.status === 401 || err.response.status === 403)) {
-          logout(); // Auto logout on invalid token
+          logout();
         }
         setError(err.message);
       } finally {
@@ -36,12 +34,10 @@ export default function Dashboard() {
     };
 
     fetchActivity();
-    // Refresh every 30 seconds
     const interval = setInterval(fetchActivity, 30000);
     return () => clearInterval(interval);
   }, []);
 
-  // demo data -- replace with API calls later
   const stats = [
     { label: "Bugs fixed (30d)", value: "128", delta: "+12%" },
     { label: "Open bugs", value: "42", delta: "-3%" },

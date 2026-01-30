@@ -8,7 +8,6 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       <div className="max-w-7xl mx-auto px-6 py-16">
-        {/* Hero */}
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <h1 className="text-4xl md:text-5xl font-extrabold leading-tight text-[#0d3141]">
@@ -65,7 +64,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Features */}
         <div className="mt-16">
           <SectionHeading
             title="Core Features"

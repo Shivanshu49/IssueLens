@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import { ThemeProvider } from "./context/ThemeContext";
 import { AuthProvider } from "./context/AuthContext";
-import "./index.css"; // Tailwind generated CSS (you said only Tailwind is imported)
+import "./index.css";
 
 const root = createRoot(document.getElementById("root"));
 root.render(

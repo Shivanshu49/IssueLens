@@ -4,21 +4,17 @@ const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
     const [theme, setTheme] = useState(() => {
-        // Check local storage first, default to light mode
         const stored = localStorage.getItem("theme");
         if (stored) {
             return stored;
         }
-        return "light"; // Default to light mode
+        return "light";
     });
 
     useEffect(() => {
         const root = window.document.documentElement;
-        // Remove both classes first
         root.classList.remove("light", "dark");
-        // Add current theme class
         root.classList.add(theme);
-        // Save to localStorage
         localStorage.setItem("theme", theme);
     }, [theme]);
 

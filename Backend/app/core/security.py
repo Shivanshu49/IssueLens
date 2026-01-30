@@ -6,8 +6,6 @@ from app.core.config import settings
 
 
 async def verify_github_signature(request: Request) -> bool:
-    """Verify GitHub webhook signature."""
-    
     signature_header = request.headers.get("X-Hub-Signature-256")
     
     if not signature_header:
@@ -18,7 +16,6 @@ async def verify_github_signature(request: Request) -> bool:
     
     body = await request.body()
     
-    # Calculate expected signature
     expected_signature = "sha256=" + hmac.new(
         settings.GITHUB_WEBHOOK_SECRET.encode(),
         body,
@@ -33,7 +30,6 @@ async def verify_github_signature(request: Request) -> bool:
     
     return True
 
-# --- Authentication Utilities ---
 from datetime import datetime, timedelta
 from typing import Optional, Union, Any
 from jose import jwt

@@ -4,7 +4,6 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 
-// API URL from env or default
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api/v1";
 
 export default function Login() {
@@ -24,7 +23,6 @@ export default function Login() {
                 email: data.email,
                 password: data.password,
             });
-            // Store token via context
             login(res.data.access_token);
             navigate("/dashboard");
         } catch (err) {

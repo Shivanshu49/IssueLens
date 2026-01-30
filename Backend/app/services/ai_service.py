@@ -8,8 +8,6 @@ logger = get_logger(__name__)
 
 
 class AIService:
-    """Service for generating AI-powered explanations."""
-    
     def __init__(self):
         self.api_key = settings.OPENAI_API_KEY
         self.model = settings.AI_MODEL
@@ -20,15 +18,8 @@ class AIService:
         commit_message: str,
         issue_context: Optional[str] = None,
     ) -> Dict[str, Any]:
-        """Generate an explanation for a bug fix."""
-        
-        # TODO: Implement OpenAI/LLM API call
-        # TODO: Structure the prompt with diff and context
-        # TODO: Parse and format the response
-        
         prompt = self._build_explanation_prompt(diff_content, commit_message, issue_context)
         
-        # Placeholder response
         return {
             "summary": "Bug fix explanation pending implementation",
             "what_changed": [],
@@ -43,15 +34,13 @@ class AIService:
         commit_message: str,
         issue_context: Optional[str] = None,
     ) -> str:
-        """Build the prompt for the AI model."""
-        
         prompt = f"""Analyze this code change and explain the bug fix:
 
 Commit Message: {commit_message}
 
 Code Diff:
 ```
-{diff_content[:4000]}  # Truncate for token limits
+{diff_content[:4000]}
 ```
 """
         
@@ -67,8 +56,6 @@ Please provide:
         return prompt
     
     async def summarize_pr(self, diff_content: str, pr_title: str) -> Dict[str, Any]:
-        """Generate a summary for a pull request."""
-        # TODO: Implement PR summarization
         return {
             "summary": "PR summary pending implementation",
             "key_changes": [],

@@ -8,7 +8,6 @@ client = TestClient(app)
 
 
 class TestHealthEndpoints:
-    """Test health check endpoints."""
     
     def test_health_check(self):
         response = client.get("/api/v1/health")
@@ -22,7 +21,6 @@ class TestHealthEndpoints:
 
 
 class TestWebhookEndpoints:
-    """Test GitHub webhook endpoints."""
     
     def test_push_webhook(self):
         payload = {
@@ -99,7 +97,6 @@ class TestWebhookEndpoints:
 
 
 class TestIssueEndpoints:
-    """Test issue endpoints."""
     
     def test_get_issues(self):
         response = client.get("/api/v1/issues")
@@ -113,7 +110,6 @@ class TestIssueEndpoints:
 
 
 class TestDashboardEndpoints:
-    """Test dashboard endpoints."""
     
     def test_get_stats(self):
         response = client.get("/api/v1/dashboard/stats")

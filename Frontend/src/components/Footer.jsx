@@ -5,7 +5,6 @@ export default function Footer() {
     <footer className="bg-[#0d3141] text-[#f7fbff]">
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="flex flex-col md:flex-row justify-between gap-10">
-          {/* Brand */}
           <div className="max-w-md">
             <Link to="/" className="inline-flex items-center gap-2">
               <span className="text-2xl font-extrabold">Issue</span>
@@ -20,7 +19,6 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Links */}
           <div className="flex gap-12">
             <div>
               <h4 className="text-sm font-semibold text-[#f7fbff] mb-3">

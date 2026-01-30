@@ -15,12 +15,10 @@ function Navbar() {
     <header className="bg-[#0d3141] text-[#f7fbff] shadow-sm">
       <div className="max-w-7xl mx-auto px-6">
         <div className="h-20 flex items-center justify-between">
-          {/* Brand */}
           <Link to="/" className="flex items-center">
             <span className="text-2xl font-extrabold leading-none">Issue</span><span className="text-2xl font-extrabold text-[#d5002c] leading-none">Lens</span>
           </Link>
 
-          {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
             <NavLink to="/" className={navClass} end>
               Home
@@ -34,7 +32,6 @@ function Navbar() {
             <NavLink to="/about" className={navClass}>
               About
             </NavLink>
-            {/* external - keep anchor for github */}
             <a
               href="https://github.com/Shivanshu49/IssueLens"
               className="text-gray-200 hover:text-white transition"
@@ -45,9 +42,7 @@ function Navbar() {
             </a>
           </nav>
 
-          {/* CTA + Mobile button */}
           <div className="flex items-center gap-4">
-            {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
               className="p-2 rounded-full hover:bg-white/10 transition"
@@ -83,7 +78,6 @@ function Navbar() {
               </>
             )}
 
-            {/* Mobile menu button */}
             <button
               onClick={() => setOpen(!open)}
               className="md:hidden p-2 rounded-md text-gray-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#d5002c]"
@@ -116,7 +110,6 @@ function Navbar() {
         </div>
       </div>
 
-      {/* Mobile menu */}
       <div
         className={`md:hidden bg-[#0d3141] border-t border-gray-700 transition-max-height duration-300 overflow-hidden ${open ? "max-h-65" : "max-h-0"
           }`}

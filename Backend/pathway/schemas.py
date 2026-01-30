@@ -1,15 +1,9 @@
-"""Pathway schemas for GitHub events."""
-
 from dataclasses import dataclass
 from typing import Optional, List
-
-# TODO: Uncomment when pathway is installed
-# import pathway as pw
 
 
 @dataclass
 class CommitEvent:
-    """Schema for commit events in Pathway."""
     sha: str
     repo_owner: str
     repo_name: str
@@ -24,7 +18,6 @@ class CommitEvent:
 
 @dataclass
 class IssueEvent:
-    """Schema for issue events in Pathway."""
     issue_id: int
     repo_owner: str
     repo_name: str
@@ -33,39 +26,13 @@ class IssueEvent:
     body: Optional[str] = None
     state: str = "open"
     action: str = "opened"
-    labels: str = ""  # JSON string of labels
+    labels: str = ""
 
 
 @dataclass
 class ExplanationResult:
-    """Schema for AI explanation results."""
     commit_sha: str
     summary: str
-    what_changed: str  # JSON string
+    what_changed: str
     why_it_fixes: Optional[str] = None
     confidence: float = 0.0
-
-
-# TODO: Define Pathway schemas
-# class CommitEventSchema(pw.Schema):
-#     sha: str
-#     repo_owner: str
-#     repo_name: str
-#     message: str
-#     author: str
-#     timestamp: str
-#     files_modified: int
-#     additions: int
-#     deletions: int
-#     is_bug_fix: bool
-
-# class IssueEventSchema(pw.Schema):
-#     issue_id: int
-#     repo_owner: str
-#     repo_name: str
-#     issue_number: int
-#     title: str
-#     body: str
-#     state: str
-#     action: str
-#     labels: str

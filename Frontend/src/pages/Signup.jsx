@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-// API URL from env or default
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api/v1";
 
 export default function Signup() {
@@ -20,7 +19,6 @@ export default function Signup() {
                 email: data.email,
                 password: data.password,
             });
-            // Redirect to login after successful signup
             navigate("/login", { state: { message: "Account created! Please log in." } });
         } catch (err) {
             setServerError(err.response?.data?.detail || "Signup failed. Please try again.");

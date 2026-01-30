@@ -5,7 +5,6 @@ from app.db.base import engine
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 def get_db() -> Generator[Session, None, None]:
-    """Dependency for getting database session."""
     db = SessionLocal()
     try:
         yield db

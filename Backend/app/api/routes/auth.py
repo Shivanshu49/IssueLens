@@ -12,7 +12,6 @@ router = APIRouter()
 
 @router.post("/signup", response_model=UserResponse)
 def create_user(user_in: UserCreate, db: Session = Depends(get_db)) -> Any:
-    """Create new user."""
     user = db.query(User).filter(User.email == user_in.email).first()
     if user:
         raise HTTPException(
@@ -33,7 +32,6 @@ def create_user(user_in: UserCreate, db: Session = Depends(get_db)) -> Any:
 
 @router.post("/login", response_model=Token)
 def login(user_in: UserLogin, db: Session = Depends(get_db)) -> Any:
-    """Login and get access token."""
     user = db.query(User).filter(User.email == user_in.email).first()
     if not user or not security.verify_password(user_in.password, user.hashed_password):
         raise HTTPException(
@@ -51,10 +49,5 @@ from app.schemas.email import EmailSchema
 
 @router.post("/forgot-password")
 def forgot_password(email_data: EmailSchema):
-    """
-    Mock password reset request.
-    In production, this would generate a token and email it to the user.
-    """
-    # TODO: Implement real email sending
     print(f"DEBUG: Password reset requested for {email_data.email}")
     return {"message": "If this email is registered, you will receive a password reset link."}

@@ -11,7 +11,6 @@ try:
     print("Defining Settings class...")
     class Settings(BaseSettings):
         PROJECT_NAME: str = "IssueLens"
-        # Removed env_file to test if BaseSettings works at all
         model_config = SettingsConfigDict(extra="ignore")
 
     print("Attempting to instantiate Settings...")

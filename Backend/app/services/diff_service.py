@@ -7,18 +7,10 @@ logger = get_logger(__name__)
 
 
 class DiffService:
-    """Service for processing and analyzing code diffs."""
-    
     def parse_diff(self, diff_content: str) -> List[DiffFile]:
-        """Parse a diff string into structured format."""
         return parse_diff(diff_content)
     
     def extract_changes(self, diff_files: List[DiffFile]) -> Dict[str, Any]:
-        """Extract meaningful changes from parsed diff."""
-        # TODO: Identify bug fix patterns
-        # TODO: Extract function/method changes
-        # TODO: Identify security-related changes
-        
         changes = {
             "files_changed": len(diff_files),
             "additions": 0,
@@ -38,8 +30,6 @@ class DiffService:
         return changes
     
     def is_bug_fix(self, commit_message: str, diff_files: List[DiffFile]) -> bool:
-        """Heuristic to determine if a commit is likely a bug fix."""
-        # TODO: Improve heuristics
         bug_keywords = ["fix", "bug", "issue", "error", "crash", "resolve", "patch"]
         message_lower = commit_message.lower()
         return any(keyword in message_lower for keyword in bug_keywords)

@@ -1,29 +1,8 @@
 from datetime import datetime
 from typing import Optional
 
-# SQLAlchemy model placeholder - uncomment when adding database
-# from sqlalchemy import Column, Integer, String, DateTime, Text
-# from app.db.base import Base
-
 
 class Issue:
-    """Issue model for tracking GitHub issues."""
-    
-    # SQLAlchemy version:
-    # __tablename__ = "issues"
-    # 
-    # id = Column(Integer, primary_key=True, index=True)
-    # github_id = Column(Integer, unique=True, index=True)
-    # repo_owner = Column(String(255), nullable=False)
-    # repo_name = Column(String(255), nullable=False)
-    # issue_number = Column(Integer, nullable=False)
-    # title = Column(String(500), nullable=False)
-    # body = Column(Text, nullable=True)
-    # status = Column(String(50), default="open")
-    # created_at = Column(DateTime, default=datetime.utcnow)
-    # updated_at = Column(DateTime, onupdate=datetime.utcnow)
-    # closed_at = Column(DateTime, nullable=True)
-    
     def __init__(
         self,
         github_id: int,
